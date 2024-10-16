@@ -9,44 +9,80 @@
 // anagrams('there Hi', 'there Bye') --> false
 
 // Solution 1
-function stringConversion(str) {
-	const strObj = {};
-	const newString = str.toLowerCase().replace(/[\W]/g, '').split('');
+// function stringConversion(str) {
+// 	const strObj = {};
+// 	const newString = str.toLowerCase().replace(/[\W]/g, '').split('');
 
-	for (const char of newString) {
-		strObj[char] = strObj[char] + 1 || 1;
-	}
+// 	for (const char of newString) {
+// 		strObj[char] = strObj[char] + 1 || 1;
+// 	}
 
-	return strObj;
-}
+// 	return strObj;
+// }
 
-function anagrams(stringA, stringB) {
-	const newStringA = stringConversion(stringA);
-	const newStringB = stringConversion(stringB);
-	let diffChar = '';
-	console.log(newStringA);
-	console.log(newStringB);
+// function anagram(stringA, stringB) {
+// 	const newStringA = stringConversion(stringA);
+// 	const newStringB = stringConversion(stringB);
+// 	let diffChar = '';
+// 	console.log(newStringA);
+// 	console.log(newStringB);
 
-	for (const key in newStringA) {
-		if (newStringA[key] === newStringB[key]) {
-			diffChar += 'Value';
-		} else {
-			diffChar = '';
-		}
-	}
+// 	for (const key in newStringA) {
+// 		if (newStringA[key] === newStringB[key]) {
+// 			diffChar += 'Value';
+// 		} else {
+// 			diffChar = '';
+// 		}
+// 	}
 
-	if (diffChar) return true;
+// 	if (diffChar) return true;
 
-	return false;
-}
+// 	return false;
+// }
 
 // Solution 2
 // function stringConversion(str) {
 // 	return str.toLowerCase().replace(/[\W]/g, '').split('').sort().join('');
 // }
 
-// function anagrams(stringA, stringB) {
+// function anagram(stringA, stringB) {
 // 	return stringConversion(stringA) === stringConversion(stringB);
 // }
 
-console.log(anagrams('RAIL! SAFETY', 'fairy tales'));
+// solution 3
+function anagram(strA, strB) {
+	const newStrA = strA.toLowerCase().replace(/[\W]/g, '');
+	const newStrB = strB.toLowerCase().replace(/[\W]/g, '');
+	const charObj = {};
+
+	for (char of newStrA) {
+		if (!(char in charObj)) {
+			charObj[char] = 0;
+		}
+		charObj[char] += 1;
+	}
+
+	for (char of newStrB) {
+		if (char in charObj) {
+			charObj[char] -= 1;
+		} else {
+			return false;
+		}
+	}
+
+	for (char in charObj) {
+		if (charObj[char] > 0) return false;
+	}
+
+	return true;
+}
+
+console.log(anagram('RAIL! SAFETYh', 'hbx'));
+// console.log(anagram('RAIL! SAFETY', 'fairy tales'));
+
+/**
+ * {
+ *    r: 1, a:2, i:1, l:1, s:1, f:1, e:1, t:1, y:1
+ * }
+ *
+ */
